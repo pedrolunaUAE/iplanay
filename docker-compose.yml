@@ -1,0 +1,30 @@
+# API de los cuadernillos. Nginx y Postgres son los de la plataforma.
+# Este compose no publica puertos. El contenedor conserva el nombre
+# que el proxy ya usa.
+
+name: iplanay
+
+services:
+  iplanay:
+    build: ./visor
+    image: iplanay-visor:local
+    container_name: plataforma-iplanay
+    restart: unless-stopped
+    environment:
+      IPLANAY_DB_HOST: ${IPLANAY_DB_HOST:-postgres}
+      IPLANAY_DB_PORT: ${IPLANAY_DB_PORT:-5432}
+      IPLANAY_DB_NAME: ${IPLANAY_DB_NAME:-iplanay}
+      IPLANAY_DB_USER: ${IPLANAY_DB_USER:-iplanay_lectura}
+      IPLANAY_DB_PASSWORD: ${IPLANAY_DB_PASSWORD}
+      IPLANAY_PORT: "8080"
+      IPLANAY_PDFS: /pdfs
+    volumes:
+      - ./visor:/app
+      - ./PDFs:/pdfs:ro
+    networks:
+      - plataforma
+
+networks:
+  plataforma:
+    external: true
+    name: plataforma

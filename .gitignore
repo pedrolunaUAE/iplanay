@@ -1,0 +1,14 @@
+.env
+geovisor/
+PDFs/
+map/*.map
+__pycache__/
+*.pyc
+.venv/
+venv/
+**/*estable*
+**/*copia*
+**/*Copia*
+.DS_Store
+Thumbs.db
+*.log
